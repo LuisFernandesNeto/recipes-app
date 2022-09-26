@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
+import Header from '../components/Header';
 import CategoryList from '../components/CategoryList';
 import RecipeCardList from '../components/RecipeCardList';
-import SearchBar from '../components/SearchBar';
 import { RecipesContext } from '../context';
 import { getMealOrDrinksFromAPI } from '../helpers/api';
 
@@ -20,7 +20,7 @@ function Drinks() {
 
   return (
     <>
-      <SearchBar />
+      <Header page="Drinks" search />
       <CategoryList />
       <RecipeCardList />
     </>

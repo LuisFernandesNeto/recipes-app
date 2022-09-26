@@ -47,7 +47,6 @@ function SearchBar() {
 
   return (
     <div>
-      <button type="button" data-testid="search-top-btn">SEARCH</button>
       <input
         type="text"
         data-testid="search-input"
