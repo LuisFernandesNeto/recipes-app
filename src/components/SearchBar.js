@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import getMealOrDrinksFromAPI from '../helpers/getMealOrDrinksFromAPI';
+import { RecipesContext } from '../context';
+import { getMealOrDrinksFromAPI } from '../helpers/api';
 
 function SearchBar() {
   const [radioFilter, setRadioFilter] = useState({ checked: '' });
   const [inputSearch, setInputSearch] = useState('');
-  const firstLetter = 'first-letter';
-  let ENDPOINT = '';
+  const { setRecipes, category } = useContext(RecipesContext);
   const location = useLocation();
 
   const handleInputSearch = ({ target }) => {
@@ -21,32 +21,28 @@ function SearchBar() {
     });
   };
 
-  const handleClickMeals = (event) => {
+  const handleClickMeals = async (event) => {
     event.preventDefault();
     const { checked } = radioFilter;
-    if (checked === 'ingredient') {
-      ENDPOINT = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputSearch}`;
-    } if (checked === 'name') {
-      ENDPOINT = `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputSearch}`;
-    } if (checked === firstLetter && inputSearch.length !== 1) {
-      global.alert('Your search must have only 1 (one) character');
-    } if (checked === firstLetter) {
-      ENDPOINT = `https://www.themealdb.com/api/json/v1/1/search.php?f=${inputSearch}`;
-    } getMealOrDrinksFromAPI(ENDPOINT);
+    const { meals } = await getMealOrDrinksFromAPI(
+      'meals',
+      checked,
+      inputSearch,
+      category,
+    );
+    setRecipes(meals);
   };
 
-  const handleClickDrinks = (event) => {
+  const handleClickDrinks = async (event) => {
     event.preventDefault();
     const { checked } = radioFilter;
-    if (checked === 'ingredient') {
-      ENDPOINT = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputSearch}`;
-    } if (checked === 'name') {
-      ENDPOINT = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputSearch}`;
-    } if (checked === firstLetter && inputSearch.length !== 1) {
-      global.alert('Your search must have only 1 (one) character');
-    } if (checked === firstLetter) {
-      ENDPOINT = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${inputSearch}`;
-    } getMealOrDrinksFromAPI(ENDPOINT);
+    const { drinks } = await getMealOrDrinksFromAPI(
+      'drinks',
+      checked,
+      inputSearch,
+      category,
+    );
+    setRecipes(drinks);
   };
 
   return (
