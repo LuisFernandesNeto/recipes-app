@@ -8,13 +8,7 @@ import SearchBar from './SearchBar';
 export default function Header({ page, search }) {
   const [searchTerm, setSearchTerm] = useState(false);
 
-  const handleSearch = () => {
-    if (searchTerm) {
-      setSearchTerm(false);
-    } else {
-      setSearchTerm(true);
-    }
-  };
+  const handleSearch = () => setSearchTerm(!searchTerm);
 
   return (
     <div>
