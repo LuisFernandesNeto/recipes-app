@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import CategoryList from '../components/CategoryList';
 import RecipeCardList from '../components/RecipeCardList';
 import { RecipesContext } from '../context';
@@ -23,6 +24,7 @@ function Drinks() {
       <Header page="Drinks" search />
       <CategoryList />
       <RecipeCardList />
+      <Footer />
     </>
   );
 }
